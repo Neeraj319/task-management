@@ -1,23 +1,24 @@
-from typing import Protocol
-
+from abc import ABC, abstractmethod
 
 from domain import models
 from sqlalchemy.orm.session import Session
 
 
-class AbstractRepository(Protocol):
+class AbstractRepository(ABC):
     session: Session
 
     def add(self, task: models.Task):
         self._add(task)
 
-    def _add(self, task: models.Task):
-        raise NotImplementedError
-
     def get(self, id: int) -> models.Task:
         task = self._get(id)
         return task
 
+    @abstractmethod
+    def _add(self, task: models.Task):
+        raise NotImplementedError
+
+    @abstractmethod
     def _get(self, id: int) -> models.Task:
         raise NotImplementedError
 

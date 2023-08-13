@@ -1,6 +1,6 @@
-from typing import Protocol
+from abc import ABC
 
 
-class AbstractUnitOfWork(Protocol):
+class AbstractUnitOfWork(ABC):
     def __enter__(self):
         return self
