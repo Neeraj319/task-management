@@ -7,6 +7,9 @@ from sqlalchemy.orm.session import Session
 class AbstractRepository(ABC):
     session: Session
 
+    def __init__(self) -> None:
+        self.seen: set[models.Task] = set()
+
     def add(self, task: models.Task):
         self._add(task)
 
@@ -23,9 +26,10 @@ class AbstractRepository(ABC):
         raise NotImplementedError
 
 
-class SqlAlchemyRepository:
+class SqlAlchemyRepository(AbstractRepository):
     def __init__(self, session: Session) -> None:
         self.session = session
+        super().__init__()
 
     def _add(self, task: models.Task):
         self.session.add(task)
