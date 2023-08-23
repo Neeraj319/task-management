@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 
-from adapters.repository import AbstractRepository, SqlAlchemyRepository
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.orm import sessionmaker
+
+from adapters.repository import AbstractRepository, SqlAlchemyRepository
 from src import config
 
 
@@ -18,7 +19,7 @@ class AbstractUnitOfWork(ABC):
     def collect_new_events(self):
         for task in self.tasks.seen:
             while task.events:
-                yield prodcut.events.pop(0)
+                yield task.events.pop(0)
 
     def commit(self):
         self._commit()
@@ -34,7 +35,7 @@ class AbstractUnitOfWork(ABC):
 
 DEFAULT_SESSION_FACTORY = sessionmaker(
     bind=create_engine(
-        config.get_sqlite_uri(),
+        config.get_postgres_uri(),
         isolation_level="REPEATABLE READ",
     )
 )

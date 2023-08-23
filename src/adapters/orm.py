@@ -1,8 +1,9 @@
-from sqlalchemy import Column, DateTime, Integer, String, Table, Enum
+import enum
+
+from sqlalchemy import Column, DateTime, Enum, Integer, String, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.mapper import Mapper
 
-import enum
 from src.domain.modles import Task
 
 Base = declarative_base()

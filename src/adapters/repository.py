@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 
-from domain import models
 from sqlalchemy.orm.session import Session
+
+from domain import models
 
 
 class AbstractRepository(ABC):
